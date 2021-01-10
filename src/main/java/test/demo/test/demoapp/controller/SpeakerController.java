@@ -1,0 +1,40 @@
+package test.demo.test.demoapp.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import test.demo.test.demoapp.model.Speaker;
+import test.demo.test.demoapp.repository.SpeakerRepository;
+import test.demo.test.demoapp.service.SpeakerService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/speakers")
+public class SpeakerController {
+
+    @Autowired
+    SpeakerService speakerService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Speaker> speakerList(){
+        return speakerService.getAllSpeakers();
+    }
+
+    @RequestMapping(value = "/speaker/{id}", method = RequestMethod.GET)
+    public Speaker getSpeakerById(@PathVariable Long id) {
+        return speakerService.getSpeakerById(id);
+    }
+
+    @RequestMapping(value = "/speaker", method = RequestMethod.POST)
+    public Speaker createSpeaker(@RequestBody Speaker speaker){
+        return speakerService.addSpeaker(speaker);
+    }
+
+    //@DeleteMapping
+    @RequestMapping(value = "/speaker/{id}", method = RequestMethod.DELETE)
+    public void deleteSpeakerById(@PathVariable Long id){
+        speakerService.deleteSpeakerById(id);
+
+    }
+
+}
